@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="theme-color" content="#141414">
+<link rel="stylesheet" href="https://reapzyweb.github.io/DivineNullToolKit/assets/core/styling.css">
+<link rel="stylesheet" id="theme-stylesheet" href="https://reapzyweb.github.io/DivineNullToolKit/assets/core/themes/dark.css">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+html,body{width:100%;height:100%;overflow-x:hidden;}
+body{background-color:var(--color-bg);color:var(--color-text);min-height:100vh;min-height:100dvh;display:flex;flex-direction:column;}
+main{flex:1;padding:var(--space-lg) var(--space-md);padding-bottom:calc(64px + var(--space-lg) + env(safe-area-inset-bottom));display:flex;flex-direction:column;align-items:center;}
+.page-header{width:100%;display:flex;flex-direction:column;align-items:center;text-align:center;padding-top:var(--space-lg);margin-bottom:var(--space-xl);}
+.page-header h3{font-family:var(--font-display);color:var(--color-text);margin-bottom:var(--space-sm);}
+.page-header p{font-family:var(--font-body);font-size:var(--font-size-sm);color:var(--color-text-muted);max-width:100%;}
+.page-card{width:100%;background:var(--color-surface-raised);border:1px solid var(--color-border-subtle);border-radius:var(--radius);padding:var(--space-lg);}
+.page-card p{font-family:var(--font-body);font-size:var(--font-size-base);color:var(--color-text);line-height:var(--line-height-relaxed);max-width:100%;text-align:left;}
+.page-card p+p{margin-top:var(--space-sm);}
+.mobile-nav{display:flex;position:fixed;bottom:0;left:0;right:0;z-index:900;align-items:center;justify-content:space-around;background:var(--color-mobile-nav-bg);border-top:1px solid var(--color-border-subtle);padding:var(--space-sm) 0 calc(var(--space-sm) + env(safe-area-inset-bottom));border-radius:0;}
+.mobile-nav-item{display:flex;flex-direction:column;align-items:center;justify-content:center;flex:1;gap:var(--space-xs);opacity:0.5;cursor:pointer;transition:opacity var(--transition-fast);padding:var(--space-xs) 0;background:none;border:none;color:var(--color-mobile-nav-item-text);}
+.mobile-nav-item.active,.mobile-nav-item:active{opacity:1;}
+.mobile-nav-icon{width:24px;height:24px;display:flex;align-items:center;justify-content:center;}
+.mobile-nav-icon img{width:24px;height:24px;object-fit:contain;display:block;filter:brightness(0) invert(1);}
+.page-blur{filter:blur(6px);transition:filter var(--transition-base);pointer-events:none;user-select:none;}
+.sheet-backdrop{position:fixed;inset:0;z-index:950;background:rgba(0,0,0,0);backdrop-filter:blur(0px);display:none;transition:background var(--transition-base),backdrop-filter var(--transition-base);}
+.sheet-backdrop.open{display:block;background:rgba(0,0,0,0.45);backdrop-filter:blur(6px);}
+.sheet{position:fixed;left:0;right:0;bottom:0;width:100%;margin:0;z-index:1000;background:var(--color-sheet-bg);color:var(--color-text);border-radius:var(--radius-lg) var(--radius-lg) 0 0;box-shadow:var(--shadow-xl);transform:translateY(100%);transition:transform var(--transition-slow);padding-bottom:env(safe-area-inset-bottom);}
+.sheet.open{transform:translateY(0);}
+.sheet-handle-wrap{display:flex;justify-content:center;padding:var(--space-md) var(--space-md) var(--space-sm);cursor:pointer;}
+.sheet-handle{width:40px;height:5px;border-radius:var(--radius-full);background:var(--color-sheet-handle-bg);transition:opacity var(--transition-fast);}
+.sheet-handle:active{opacity:0.6;}
+.sheet-body{padding:var(--space-sm) var(--space-md) var(--space-lg);display:flex;flex-direction:column;align-items:flex-start;}
+.sheet-option{display:flex;align-items:center;justify-content:flex-start;gap:var(--space-md);padding:var(--space-md) var(--space-sm);cursor:pointer;border-radius:var(--radius);transition:background var(--transition-fast);border:none;background:none;width:100%;color:var(--color-text);font-family:var(--font-body);font-size:var(--font-size-base);text-align:left;}
+.sheet-option:active{background:var(--color-surface-raised);}
+.sheet-option-icon{width:22px;height:22px;flex-shrink:0;display:flex;align-items:center;justify-content:center;}
+.sheet-option-icon img{width:22px;height:22px;object-fit:contain;display:block;filter:brightness(0) invert(1);}
+</style>
+</head>
+<body>
+<main id="main-content">
+  <div class="page-header">
+    <h3>DivineNull ToolKit</h3>
+    <p>Advanced OSINT, networking, optimization tools & more.</p>
+  </div>
+  <div class="page-card">
+    <p>Version: {Application.MetaData.VersionInformation}</p>
+    <p>Build: Universal-TestBuild</p>
+    <p>Author: NexusByte Dev</p>
+    <p>SU Status: LocalSuperUser.Module:0</p>
+  </div>
+</main>
+<nav class="mobile-nav" role="navigation" aria-label="Main navigation">
+  <button class="mobile-nav-item active" onclick="location.href='https://reapzyweb.github.io/DivineNullToolKit/application/home.html'" aria-label="Home">
+    <span class="mobile-nav-icon"><img src="https://initnexus.github.io/Core/assets/icons/flaticon/home.svg" alt=""></span>
+  </button>
+  <button class="mobile-nav-item" onclick="location.href='https://reapzyweb.github.io/DivineNullToolKit/application/toolkit/toolkit.html'" aria-label="ToolKit">
+    <span class="mobile-nav-icon"><img src="https://initnexus.github.io/Core/assets/icons/flaticon/toolbox.svg" alt=""></span>
+  </button>
+  <button class="mobile-nav-item" onclick="location.href='https://reapzyweb.github.io/DivineNullToolKit/application/search.html'" aria-label="Search">
+    <span class="mobile-nav-icon"><img src="https://initnexus.github.io/Core/assets/icons/flaticon/search.svg" alt=""></span>
+  </button>
+  <button class="mobile-nav-item" onclick="location.href='https://reapzyweb.github.io/DivineNullToolKit/application/settings.html'" aria-label="Settings">
+    <span class="mobile-nav-icon"><img src="https://initnexus.github.io/Core/assets/icons/flaticon/settings.svg" alt=""></span>
+  </button>
+  <button class="mobile-nav-item" id="menu-trigger" aria-label="Menu" aria-expanded="false" aria-controls="sheet-menu">
+    <span class="mobile-nav-icon"><img src="https://initnexus.github.io/Core/assets/icons/flaticon/menu.svg" alt=""></span>
+  </button>
+</nav>
+<div class="sheet-backdrop" id="sheet-backdrop" aria-hidden="true"></div>
+<div class="sheet" id="sheet-menu" role="dialog" aria-modal="true" aria-label="Menu">
+  <div class="sheet-handle-wrap" id="sheet-handle" role="button" aria-label="Close menu" tabindex="0">
+    <div class="sheet-handle"></div>
+  </div>
+  <div class="sheet-body">
+    <button class="sheet-option">
+      <span class="sheet-option-icon"><img src="https://initnexus.github.io/Core/assets/icons/flaticon/shield.svg" alt="Shield"></span>
+      <span>Vault</span>
+    </button>
+    <button class="sheet-option">
+      <span class="sheet-option-icon"><img src="https://initnexus.github.io/Core/assets/icons/flaticon/swap-arrows.svg" alt=""></span>
+      <span>Reset ALL Tool Settings</span>
+    </button>
+    <button class="sheet-option">
+      <span class="sheet-option-icon"><img src="https://initnexus.github.io/Core/assets/icons/flaticon/right-pointing-hand.svg" alt=""></span>
+      <span>Exit DivineNull ToolKit</span>
+    </button>
+  </div>
+</div>
+<script src="https://reapzyweb.github.io/DivineNullToolKit/assets/core/script.js"></script>
+<script>
+(function(){
+  var trigger=document.getElementById('menu-trigger');
+  var sheet=document.getElementById('sheet-menu');
+  var backdrop=document.getElementById('sheet-backdrop');
+  var handle=document.getElementById('sheet-handle');
+  var mainContent=document.getElementById('main-content');
+  var nav=document.querySelector('.mobile-nav');
+  function openMenu(){
+    backdrop.classList.add('open');
+    sheet.classList.add('open');
+    mainContent.classList.add('page-blur');
+    nav.classList.add('page-blur');
+    trigger.setAttribute('aria-expanded','true');
+    sheet.focus();
+  }
+  function closeMenu(){
+    backdrop.classList.remove('open');
+    sheet.classList.remove('open');
+    mainContent.classList.remove('page-blur');
+    nav.classList.remove('page-blur');
+    trigger.setAttribute('aria-expanded','false');
+  }
+  trigger.addEventListener('click',openMenu);
+  backdrop.addEventListener('click',closeMenu);
+  handle.addEventListener('click',closeMenu);
+  handle.addEventListener('keydown',function(e){if(e.key==='Enter'||e.key===' '){e.preventDefault();closeMenu();}});
+  document.addEventListener('keydown',function(e){if(e.key==='Escape'&&sheet.classList.contains('open'))closeMenu();});
+  var startY=0;
+  sheet.addEventListener('touchstart',function(e){startY=e.touches[0].clientY;},{passive:true});
+  sheet.addEventListener('touchend',function(e){if(e.changedTouches[0].clientY-startY>60)closeMenu();},{passive:true});
+})();
+</script>
+</body>
+</html>
